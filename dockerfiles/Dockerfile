@@ -12,7 +12,7 @@ RUN cp -rf /etc/nginx /home/user/ && \
 
 USER user
 
-ADD /resources/entrypoint.sh /home/user/entrypoint.sh
+#ADD /resources/entrypoint.sh /home/user/entrypoint.sh
 ADD /resources/nginx.conf /home/user/nginx/nginx.conf
 ADD /resources/ui_example_root /home/user/nginx/sites-available/ui_example_root
 
