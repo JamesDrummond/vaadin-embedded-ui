@@ -14,7 +14,7 @@ USER user
 
 ADD /resources/entrypoint.sh /home/user/entrypoint.sh
 ADD /resources/nginx.conf /home/user/nginx/nginx.conf
-ADD /resources/ui_example_root /home/user/sites-available/ui_example_root
+ADD /resources/ui_example_root /home/user/nginx/sites-available/ui_example_root
 
 RUN chmod u+x /home/user/entrypoint.sh
 
