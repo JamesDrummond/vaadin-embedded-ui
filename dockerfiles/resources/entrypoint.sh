@@ -10,7 +10,7 @@
  UNAME_R=${UNAME_R:-$(uname -r)}
  if [[ ${UNAME_R} != 'moby' && ${UNAME_R} != 'boot2docker' ]] ; then 
     ## Non-Blocking for unix only
-    bash -c "inotifywait -e delete -r /projects/$TEMP_WORKAROUND_FILE | while read line; do cp -rf /home/user/nginx /project ; done" &
+    bash -c "inotifywait -e delete -r /projects/$TEMP_WORKAROUND_FILE | cp -rf /home/user/nginx /projects/" &
  else
     ## Blocking for windows and mac only
     bash -c "while [ -f /projects/$TEMP_WORKAROUND_FILE ]; do sleep 3 ; done; if [ ! -d /projects/nginx/ ]; then cp -rf /home/user/nginx /projects ; fi"  > /dev/null 2>&1 &
