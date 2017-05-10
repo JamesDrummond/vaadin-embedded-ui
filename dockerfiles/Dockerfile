@@ -23,9 +23,7 @@ RUN mkdir -m 700 ~/.ssh && \
 	sed 's/UsePrivilegeSeparation yes/UsePrivilegeSeparation no/' /etc/ssh/sshd_config > ~/.ssh/sshd_config && \
 	chmod 644 ~/.ssh/sshd_config
 
-
-
-RUN ln -s /home/user/sites-available/ui_example_root /home/user/sites-enabled/ui_example_root
+RUN ln -s ../sites-available/ui_example_root /home/user/nginx/sites-enabled/ui_example_root
 
 CMD tail -f /dev/null
 RUN sudo apt-get update && \
