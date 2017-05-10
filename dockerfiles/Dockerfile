@@ -12,11 +12,11 @@ RUN cp -rf /etc/nginx /home/user/ && \
 
 USER user
 
-ADD /resources/entrypoint.sh /home/user/entrypoint.sh
+ADD /resources/entrypoint.sh /home/user/entrypoint.sh2
 ADD /resources/nginx.conf /home/user/nginx/nginx.conf
 ADD /resources/ui_example_root /home/user/nginx/sites-available/ui_example_root
 
-RUN chmod a+rwx /home/user/entrypoint.sh
+RUN chmod a+rwx /home/user/entrypoint.sh2
 
 RUN mkdir -m 700 /home/user/.ssh && \
     sed -i 's/\/etc\/nginx\//\/home\/user\//' /home/user/nginx/nginx.conf && \
