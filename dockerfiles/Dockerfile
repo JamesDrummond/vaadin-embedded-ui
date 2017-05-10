@@ -10,8 +10,6 @@ RUN apt-get update && \
 RUN cp -rf /etc/nginx /home/user/ && \
 	chown -R user:user /home/user/
 
-RUN ln -s /home/user/sites-available/ui_example_root /home/user/sites-enabled/ui_example_root
-
 USER user
 
 RUN sed -i 's/\/etc\/nginx\//\/home\/user\//' /home/user/nginx.conf && \
@@ -24,4 +22,9 @@ ADD /resources/ui_example_root /home/user/sites-available/ui_example_root
 
 RUN chmod u+x /home/user/entrypoint.sh
 
+RUN ln -s /home/user/sites-available/ui_example_root /home/user/sites-enabled/ui_example_root
+
 CMD tail -f /dev/null
+RUN sudo apt-get update && \
+	sudo apt-get -y install nano nginx 
+	
