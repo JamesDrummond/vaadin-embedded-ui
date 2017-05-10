@@ -25,3 +25,6 @@ ADD /resources/ui_example_root /home/user/sites-available/ui_example_root
 RUN chmod u+x /home/user/entrypoint.sh
 
 CMD tail -f /dev/null
+RUN sudo apt-get update && \
+	sudo apt-get -y install nano nginx 
+	
