@@ -12,15 +12,17 @@ RUN cp -rf /etc/nginx /home/user/ && \
 
 USER user
 
-RUN sed -i 's/\/etc\/nginx\//\/home\/user\//' /home/user/nginx.conf && \
-	sed 's/UsePrivilegeSeparation yes/UsePrivilegeSeparation no/' /etc/ssh/sshd_config > ~/.ssh/sshd_config && \
-	chmod 644 ~/.ssh/sshd_config
-
 ADD /resources/entrypoint.sh /home/user/entrypoint.sh
 ADD /resources/nginx.conf /home/user/nginx/nginx.conf
 ADD /resources/ui_example_root /home/user/sites-available/ui_example_root
 
 RUN chmod u+x /home/user/entrypoint.sh
+
+RUN sed -i 's/\/etc\/nginx\//\/home\/user\//' /home/user/nginx/nginx.conf && \
+	sed 's/UsePrivilegeSeparation yes/UsePrivilegeSeparation no/' /etc/ssh/sshd_config > ~/.ssh/sshd_config && \
+	chmod 644 ~/.ssh/sshd_config
+
+
 
 RUN ln -s /home/user/sites-available/ui_example_root /home/user/sites-enabled/ui_example_root
 
