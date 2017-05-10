@@ -5,7 +5,7 @@ USER root
 ENV NGINX_PORT_SERVE=8080
 
 RUN apt-get update && \
-	apt-get -y install nano nginx 
+	apt-get -y install nano nginx inotify-tools
 	
 RUN cp -rf /etc/nginx /home/user/ && \
 	chown -R user:user /home/user/
