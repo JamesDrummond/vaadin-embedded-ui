@@ -25,7 +25,5 @@ RUN mkdir -m 700 /home/user/.ssh && \
 
 RUN ln -s ../sites-available/ui_example_root /home/user/nginx/sites-enabled/ui_example_root
 
-CMD tail -f /dev/null
-RUN sudo apt-get update && \
-	sudo apt-get -y install nano nginx 
+CMD /usr/bin/tail -f /dev/null
 	
