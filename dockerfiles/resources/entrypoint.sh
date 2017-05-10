@@ -8,7 +8,7 @@
  export TEMP_WORKAROUND_FILE=.$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
  touch /projects/$TEMP_WORKAROUND_FILE
  UNAME_R=${UNAME_R:-$(uname -r)}
- if [[ '${UNAME_R}' -ne 'moby' && '${UNAME_R}' -ne 'boot2docker' ]] ; then 
+ if [[ ${UNAME_R} -ne 'moby' && ${UNAME_R} -ne 'boot2docker' ]] ; then 
     ## Non-Blocking for unix only
     bash -c 'inotifywait -e delete -m -r /projects/$TEMP_WORKAROUND_FILE && cp -rf /home/user/nginx /projects'
  else
