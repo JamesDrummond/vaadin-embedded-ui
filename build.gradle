@@ -1,0 +1,100 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'war'
+apply from: 'gretty.plugin'
+
+group = 'io.bonder.examples.examples'
+version = '1.0-SNAPSHOT'
+description = """hello-app"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+gretty {
+  httpPort = 9000
+  contextPath = '/'
+}
+
+sourceSets{  
+    main{  
+        java{  
+            srcDir 'src/main'  
+        }  
+    }  
+} 
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'io.bonder.examples.UiExampleMenubar'
+    }
+}
+
+repositories {
+    maven { url "http://vaadin.com/nexus/content/repositories/vaadin-addons/" } 
+    maven { url "https://oss.sonatype.org/content/repositories/vaadin-snapshots/" }
+    maven { url "http://repo.maven.apache.org/maven2" }
+    mavenCentral() 
+}                                                             
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version:'3.8.1'
+    compile group: 'com.vaadin', name: 'vaadin-server', version:'7.7.3'
+    compile group: 'com.vaadin', name: 'vaadin-push', version:'7.7.3'
+    compile group: 'com.vaadin', name: 'vaadin-themes', version:'7.7.3'
+    compile group: 'com.vaadin.addon', name: 'vaadin-spreadsheet', version:'1.2.0.alpha1'
+    compile group: 'com.vaadin', name: 'vaadin-client-compiled', version:'7.7.3'
+    compile group: 'org.vaadin', name: 'elements', version:'0.1.5'
+    compile group: 'com.thetransactioncompany', name: 'cors-filter', version:'2.5'
+    providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version:'3.0.1'
+    
+}
+
+test {
+    doLast {
+        println 'running unit tests'
+    }
+}
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+}
+publishing {
+    publications {
+        mavenCustom(MavenPublication) {
+            
+            pom.withXml { 
+                def nodeHold = asNode().appendNode('repositories')
+                project.repositories.each {
+                    def repo = nodeHold.appendNode('repository')
+                    repo.appendNode('id',it.name)
+                    repo.appendNode('url',it.url)
+                }
+            }
+            pom.withXml {
+                def deps = asNode().appendNode('dependencies')                
+                configurations.compile.allDependencies.each{
+                    def dep =  deps.appendNode('dependency')
+                    dep.appendNode('groupId',it.group)
+                    dep.appendNode('artifactId',it.name)
+                    dep.appendNode('version',it.version)
+                    dep.appendNode('scope',it.configuration)
+                }
+            }
+        }
+    }
+}
+
+model {
+    tasks.generatePomFileForMavenPublication {
+        destination = file("pom.xml")
+    }
+    tasks.generatePomFileForMavenCustomPublication {
+        destination = file("pom.xml")
+    }
+}
+
+
