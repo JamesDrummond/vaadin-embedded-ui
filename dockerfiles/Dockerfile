@@ -22,6 +22,7 @@ RUN mkdir -m 700 /home/user/.ssh && \
     sed -i 's/\/etc\/nginx\//\/home\/user\//' /home/user/nginx/nginx.conf && \
 	sed 's/UsePrivilegeSeparation yes/UsePrivilegeSeparation no/' /etc/ssh/sshd_config > /home/user/.ssh/sshd_config && \
 	chmod 644 /home/user/.ssh/sshd_config && \
+	mkdir -p /home/user/.gradle && \
 	echo "org.gradle.daemon=true" > /home/user/.gradle/gradle.properties
 
 RUN ln -s ../sites-available/ui_example_root /home/user/nginx/sites-enabled/ui_example_root
